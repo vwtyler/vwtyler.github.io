@@ -109,7 +109,7 @@ I started with a minimal config focused on capture stability and predictable out
 
 Create `/etc/liquidsoap/kaad-test.liq`:
 
-```liquidsoap
+```text
 set("log.level", 3)
 set("server.telnet", true)
 set("server.telnet.port", 1234)
@@ -163,7 +163,7 @@ After that verification, I connected the chain to the station's MyRadioStream se
 
 At that point, the output side switched from `output.shoutcast` to `output.icecast`:
 
-```liquidsoap
+```text
 output.icecast(
   %mp3(bitrate=192, samplerate=44100, stereo=true),
   host="YOUR_ICECAST_HOST",
