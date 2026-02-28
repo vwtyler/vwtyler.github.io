@@ -1,5 +1,5 @@
 ---
-title: "Transitioning from Winamp + Shoutcast DSP to Liquidsoap"
+title: "From Winamp Drift to a Stable Stream: KAAD-LP's First Liquidsoap Cutover"
 date: 2026-02-27 15:00:00 -0800
 categories: [kaad-one]
 tags: [winamp, shoutcast, liquidsoap, migration, streaming]
