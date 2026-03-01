@@ -7,36 +7,15 @@ title: About
 
 Hi, I'm Tyler.
 
-I write about practical engineering work: building reliable systems, debugging ugly edge cases, and documenting what actually happened (not just the polished final state).
+I document real-world engineering work: community radio infrastructure at KAAD-LP, Linux/Liquidsoap streaming, and homelab systems that need to be reliable in practice, not just in theory.
 
-Right now, this includes two main tracks:
+This site is where I share configs, command-level walkthroughs, failures, fixes, and lessons learned so others (and future me) can reuse them.
 
-- **KAAD-LP / kaad-one work** — helping upgrade community radio infrastructure for reliability, with a focus on Linux audio, Liquidsoap, automation, and operational resilience.
-- **Homelab and self-hosting** — services, deployment workflows, observability, and the occasional "this broke at 2am" postmortem.
+If this work saved you time or helped you avoid an outage, you can support it here:
 
-## Why this site exists
+<script src="https://liberapay.com/vwtyler/widgets/button.js"></script>
+<noscript><a href="https://liberapay.com/vwtyler/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
 
-I wanted one place to keep technical notes that are useful to:
+[Donate on Liberapay](https://liberapay.com/vwtyler/donate)
 
-- future me,
-- station operators and collaborators,
-- anyone solving similar problems in small, resource-constrained environments.
-
-Most posts are written as case studies with configs, commands, tradeoffs, and lessons learned.
-
-## How I work
-
-I value systems that are:
-
-- **reproducible** over magical,
-- **recoverable** over fragile,
-- **operator-friendly** over clever.
-
-If a workflow depends on perfect user behavior, I treat that as a design bug.
-
-## Elsewhere
-
-- GitHub: [github.com/vwtyler](https://github.com/vwtyler)
-- X/Twitter: [twitter.com/vwtyler](https://twitter.com/vwtyler)
-- Bluesky: [bsky.app/profile/vwtyler.bsky.social](https://bsky.app/profile/vwtyler.bsky.social)
-- KAAD-LP: [kaad-lp.org](https://kaad-lp.org)
+Elsewhere: [GitHub](https://github.com/vwtyler) · [X/Twitter](https://twitter.com/vwtyler) · [Bluesky](https://bsky.app/profile/vwtyler.bsky.social) · [KAAD-LP](https://kaad-lp.org)
