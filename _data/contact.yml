@@ -3,9 +3,8 @@
 - type: github
   icon: "fab fa-github"
 
-- type: rss
-  icon: "fas fa-rss"
-  noblank: true
+- type: twitter
+  icon: "fa-brands fa-x-twitter"
 
 - type: liberapay
   icon: "fas fa-circle-dollar-to-slot"

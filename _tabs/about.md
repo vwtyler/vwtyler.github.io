@@ -7,28 +7,36 @@ title: About
 
 Hi, I'm Tyler.
 
-I document practical engineering work from real deployments, with a focus on reliability and operator-friendly systems.
+I write about practical engineering work: building reliable systems, debugging ugly edge cases, and documenting what actually happened (not just the polished final state).
 
-Right now this includes:
+Right now, this includes two main tracks:
 
-- KAAD-LP / kaad-one broadcast and streaming infrastructure work
-- Homelab and self-hosted systems design, operations, and troubleshooting
+- **KAAD-LP / kaad-one work** — helping upgrade community radio infrastructure for reliability, with a focus on Linux audio, Liquidsoap, automation, and operational resilience.
+- **Homelab and self-hosting** — services, deployment workflows, observability, and the occasional "this broke at 2am" postmortem.
 
-Most posts are written as implementation notes and case studies with concrete configs, commands, and lessons learned.
+## Why this site exists
 
-## Why Donate
+I wanted one place to keep technical notes that are useful to:
 
-I publish this work openly so other builders and small teams can reuse it.
+- future me,
+- station operators and collaborators,
+- anyone solving similar problems in small, resource-constrained environments.
 
-Your support helps me:
+Most posts are written as case studies with configs, commands, tradeoffs, and lessons learned.
 
-- Keep documentation current and public
-- Spend more time writing complete technical walkthroughs
-- Build and maintain practical tools and workflows
+## How I work
 
-If these posts saved you time or helped you avoid an outage, a donation keeps the work moving.
+I value systems that are:
 
-<script src="https://liberapay.com/vwtyler/widgets/button.js"></script>
-<noscript><a href="https://liberapay.com/vwtyler/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
+- **reproducible** over magical,
+- **recoverable** over fragile,
+- **operator-friendly** over clever.
 
-Or donate directly: [liberapay.com/vwtyler/donate](https://liberapay.com/vwtyler/donate)
+If a workflow depends on perfect user behavior, I treat that as a design bug.
+
+## Elsewhere
+
+- GitHub: [github.com/vwtyler](https://github.com/vwtyler)
+- X/Twitter: [twitter.com/vwtyler](https://twitter.com/vwtyler)
+- Bluesky: [bsky.app/profile/vwtyler.bsky.social](https://bsky.app/profile/vwtyler.bsky.social)
+- KAAD-LP: [kaad-lp.org](https://kaad-lp.org)
