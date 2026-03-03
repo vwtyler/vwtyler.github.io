@@ -6,15 +6,27 @@ categories: [kaad-one]
 tags: [winamp, shoutcast, liquidsoap, migration, streaming]
 ---
 
-I am working with KAAD-LP 103.5 FM in Sonora ([kaad-lp.org](https://kaad-lp.org)) on a reliability upgrade for the station's streaming path.
+I'm working with KAAD-LP 103.5 FM in Sonora ([kaad-lp.org](https://kaad-lp.org)), a community station with volunteers, a lot of moving parts, and a real need for reliability. As we started modernizing other pieces of station infrastructure, one thing stood out: the internet stream path was too easy to break.
 
-KAAD-LP is a community station with a few live operators who are all volunteers, with a small but dedicated listenership. The requirement is practical: the stream should stay up even during studio use by a live DJ. The legacy workflow (Winamp + Shoutcast DSP) had become too fragile for that. The station is also going through a growth stage with a large technical upgrade, new board, broadcast desk, broadcast workstation, etc. In this forward motion, the intention is to make the station more reliable and user friendly.
+The old setup relied on a standard studio desktop workflow. It could work for long stretches, but normal use in a live environment could still knock the stream off. That wasn't really a people problem, it was an architecture problem.
 
-I'm going to talk about this transition over time, primarily with respect to kaad-one, the server I set up. Today we start from the beginning.
+So instead of trying to keep patching that workflow, I moved the stream "brain" to a dedicated machine and used purpose-built Linux streaming tools to send audio out reliably. The idea was simple: fewer fragile dependencies, clearer monitoring, and a system that behaves predictably.
+
+This post walks through that first transition step and how I validated the new path before fully relying on it.
+
+## What we're talking about
+
+- **Internet stream path**: The chain that takes station audio and sends it to listeners online.
+- **Ingest**: Bringing studio audio into the streaming system.
+- **Encoding**: Converting audio into a format listeners can play online.
+- **Shoutcast / Icecast**: Streaming server types used to deliver internet radio audio.
+- **Liquidsoap**: The software engine I use to route and send the stream.
+- **Fallback**: A backup source used if the main source fails.
+- **kaad-one**: The dedicated machine running the streaming path.
 
 ## Context
 
-The previous stream chain was tied to a desktop workflow. Computer A runs Winamp with the DSP plugin broadcasting to Myradiostream. It worked, but it was sensitive to local machine state and end-user interactions. DJs could accidentally knock the stream off-air while doing routine show tasks. This introduced massive unreliability with little ability to know something had gone wrong. So the stream would go off, then a few hours would go by before someone let us know.
+The previous stream chain was tied to a desktop workflow. Computer A runs Winamp with the DSP plugin broadcasting to MyRadioStream. It worked, but it was sensitive to local machine state and end-user interactions. DJs could accidentally knock the stream off-air while doing routine show tasks. This introduced massive unreliability with little ability to know something had gone wrong. So the stream would go off, then a few hours would go by before someone let us know.
 
 After several attempts to communicate best practices with large notes taped to the computer monitor, I realized the issue was not operator error. The issue was architecture.
 
@@ -39,7 +51,7 @@ This let me initiate the modernization of the streaming side without disrupting 
 
 ## Setting up the stream
 
-After doing a clean install of Ubuntu 24.04.4 LTS, I tackled configuring the MOTU input channels and set up a test Myradiostream server, then configured Liquidsoap to do its thing. I actually did this in a roundabout way, since I was initially setting this up at home. My first tests were relaying the main stream to my test stream using Liquidsoap without the M2, but I will show the config here with the M2.
+After doing a clean install of Ubuntu 24.04.4 LTS, I tackled configuring the MOTU input channels and set up a test MyRadioStream server, then configured Liquidsoap to do its thing. I actually did this in a roundabout way, since I was initially setting this up at home. My first tests were relaying the main stream to my test stream using Liquidsoap without the M2, but I will show the config here with the M2.
 
 To get started I went through these main steps:
 
@@ -66,7 +78,7 @@ card 2: M2 [MOTU M2], device 0: USB Audio [USB Audio]
   Subdevices: 1/1
   Subdevice #0: subdevice #0
 ```
-But if you are using a different usb audio interface, it will be different.
+But if you are using a different USB audio interface, it will be different.
 
 Then a quick capture sanity check:
 
@@ -195,7 +207,7 @@ output.icecast(
 
 I also raised bitrate from the initial test profile to improve stream quality after stability was confirmed. 
 
-## Systemd service
+## systemd service
 
 After I got it all working, I needed to set up a service to keep it running all the time. I used systemd to accomplish this.
 

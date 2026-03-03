@@ -6,11 +6,25 @@ categories: [homelab]
 tags: [cloudflare, dns, ddns, systemd, linux, automation, security]
 ---
 
-I wanted a simple dynamic DNS setup for homelab services that need a stable DNS name even when my residential IP changes. Right now I mostly rely on it for WireGuard access, but the same pattern works for anything fronted by a DNS record.
+At home, I often need to reach things by using my public internet address (IP), which is basically a string of numbers. That's annoying to remember, and honestly not how I want to think about my own setup.
 
-All my domains are managed in Cloudflare, so I used Cloudflare's DNS API, a small shell script, and a **systemd** timer.
+So the obvious move is to give those numbers a name, like `myhomecomputer.com`. Easy enough, right? Well, not quite. My home IP doesn't change all the time, but it does change eventually. So I can't just point `myhomecomputer.com` at one address and expect it to work forever.
 
-I run this pattern on more than one machine now, and it has been easy to reuse and troubleshoot. There are other ways to do DDNS, but this one stays transparent and easy to audit. I use `mydomain.com` as the placeholder below.
+This is where Dynamic DNS comes in. It's a common fix for this exact problem. There are services that do it for you, but many either cost money or force you onto a provider-branded name like `yourcomputer.superddns.com`.
+
+I wanted my own domain name, not someone else's subdomain. Since I already manage my domains in Cloudflare, I decided to use that: have my home server check my current home internet address on a schedule, compare it to what Cloudflare has on file, and update it only if it changed.
+
+This post shows exactly how I set that up, including how I made it run automatically on a schedule.
+
+## What we're talking about
+
+- **IP address**: The number-based address your home connection is using right now.
+- **Public IP**: The address your home appears as on the internet.
+- **Domain name**: A readable name like `myhomecomputer.com`.
+- **DNS**: The internet system that maps names to number-based addresses.
+- **Dynamic DNS (DDNS)**: A way to keep your domain name pointed at the right home address over time.
+- **Cloudflare**: The service where I manage domain records in this setup.
+- **systemd timer**: A built-in Linux scheduler that runs a task on a set schedule.
 
 ## Why this setup
 
