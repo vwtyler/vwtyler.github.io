@@ -19,12 +19,11 @@ This post shows exactly how I set that up, including how I made it run automatic
 ## What we're talking about
 
 - **IP address**: The number-based address your home connection is using right now.
-- **Public IP**: The address your home appears as on the internet.
 - **Domain name**: A readable name like `myhomecomputer.com`.
 - **DNS**: The internet system that maps names to number-based addresses.
 - **Dynamic DNS (DDNS)**: A way to keep your domain name pointed at the right home address over time.
 - **Cloudflare**: The service where I manage domain records in this setup.
-- **systemd timer**: A built-in Linux scheduler that runs a task on a set schedule.
+- **systemd** timer: A built-in Linux scheduler that runs a task on a set schedule.
 
 ## Why this setup
 
@@ -179,7 +178,7 @@ ExecStart=/var/www/dnsupdater.sh
 
 ## 4) systemd timer
 
-Set up the timer to run once a day. `Persistent=true` also helps if the host was down at the scheduled time; systemd will run the missed job after boot.
+Set up the timer to run once a day. `Persistent=true` also helps if the host was down at the scheduled time; **systemd** will run the missed job after boot.
 
 `/etc/systemd/system/cloudflare-ddns.timer`:
 
@@ -196,7 +195,7 @@ Persistent=true
 WantedBy=timers.target
 ```
 
-One useful `systemd` detail: this timer runs `cloudflare-ddns.service` because the base name matches. If you ever want a timer to trigger a differently named service, set `Unit=your-service.service` in the `[Timer]` block.
+One useful **systemd** detail: this timer runs `cloudflare-ddns.service` because the base name matches. If you ever want a timer to trigger a differently named service, set `Unit=your-service.service` in the `[Timer]` block.
 
 Enable and start:
 
