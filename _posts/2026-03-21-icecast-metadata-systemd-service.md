@@ -5,9 +5,9 @@ categories: [kaad-one]
 tags: [icecast, systemd, acrcloud, metadata, linux, automation, security]
 ---
 
-When we listen in the car, it is a lot nicer when the stream shows the song title and artist instead of a blank field. It is a small thing, but it makes the station feel more complete and easier to use in players like VLC and CarPlay.
+When we listen to [KAAD's internet stream](https://listen.kaad-lp.org) in the car, it is a lot nicer when the stream shows the song title and artist instead of a blank field. It is a small thing, but it makes the station feel more complete and easier to use in players like VLC and CarPlay.
 
-Our audio setup sends the music fine, but it does not send track names on its own. To fix that, I use ACRCloud, which is a music recognition service (basically Shazam-style matching for streams). It listens to the audio feed, identifies what song is playing, and gives that result back through an API.
+[KAAD's audio setup](/posts/winamp-shoutcast-dsp-to-liquidsoap/) sends the music fine, but it does not send track names on its own. To fix that, I use ACRCloud, which is a music recognition service (basically Shazam-style matching for streams). It listens to the audio feed, identifies what song is playing, and gives that result back through an API.
 
 From there, I run a small tool called `slogger` that takes that song info and updates Icecast automatically.
 
@@ -42,9 +42,6 @@ Create an env file with API and Icecast settings:
 
 `/home/user/slogger/icecast-meta.env`
 
-<details>
-<summary>Show <code>icecast-meta.env</code> example</summary>
-
 ```bash
 # ACRCloud API endpoint + token
 ACR_URL="https://api-v2.acrcloud.com/api/bm-cs-projects/PROJECT_ID/streams/STREAM_ID/results?type=last"
@@ -62,8 +59,6 @@ ICECAST_MOUNT="stream"
 POLL_SECONDS="20"
 CURL_INSECURE="0"
 ```
-
-</details>
 
 Minimum permission baseline:
 
@@ -85,7 +80,7 @@ The updater script:
 
 `/home/user/slogger/icecast-meta.sh`
 
-<details>
+<details markdown="1">
 <summary>Show <code>icecast-meta.sh</code></summary>
 
 ```bash
@@ -215,7 +210,7 @@ Create a dedicated service so metadata updates survive reboots and process exits
 
 `/etc/systemd/system/icecast-meta.service`
 
-<details>
+<details markdown="1">
 <summary>Show <code>icecast-meta.service</code></summary>
 
 ```ini
@@ -256,9 +251,6 @@ sudo systemctl enable --now icecast-meta.service
 
 For day-to-day operation:
 
-<details>
-<summary>Show useful systemd and journalctl commands</summary>
-
 ```bash
 sudo systemctl status icecast-meta.service
 sudo journalctl -u icecast-meta.service -f
@@ -266,18 +258,11 @@ sudo journalctl -u icecast-meta.service -n 50 --no-pager
 sudo systemctl restart icecast-meta.service
 ```
 
-</details>
-
 Expected healthy log lines include:
-
-<details>
-<summary>Show expected log output example</summary>
 
 ```text
 Updated metadata: Artist - Track Title
 ```
-
-</details>
 
 If you see repeated HTTP `403` errors, validate token scope/expiry and confirm the `ACR_URL` still points to the correct project stream.
 
