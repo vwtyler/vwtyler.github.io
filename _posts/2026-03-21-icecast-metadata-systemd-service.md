@@ -1,6 +1,7 @@
 ---
 title: "Automating Icecast Song Metadata with a systemd Service"
 date: 2026-03-21 22:35:00 -0700
+description: "Automatically update Icecast now-playing song titles and artists using ACRCloud, a Bash script, and a Linux systemd service."
 categories: [kaad-one]
 tags: [icecast, systemd, acrcloud, metadata, linux, automation, security]
 ---
@@ -274,3 +275,5 @@ If you see repeated HTTP `403` errors, validate token scope/expiry and confirm t
 - Rotate secrets immediately if there is any chance they were exposed.
 
 This setup gives a straightforward, auditable metadata path with native Linux components and very little operational overhead.
+
+For more on the station's software infrastructure, see [Radiant: Separating Project Code from Production Deployment](/posts/radiant-separating-code-and-deployment/).
