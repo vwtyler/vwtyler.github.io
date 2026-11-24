@@ -1,6 +1,7 @@
 ---
 title: "Radiant: Separating Project Code from Production Deployment"
 date: 2026-11-24 12:00:00 -0800
+description: "Why I moved Radiant's production deployment into a private repository while keeping the radio operations platform open source."
 categories: [radiant]
 tags: [radio, github-actions, docker, deployment, automation, self-hosting]
 ---
@@ -9,9 +10,13 @@ I've been working on [Radiant](https://github.com/vwtyler/radiant), a self-hoste
 
 There are a lot of little things that go into running a radio station that don't necessarily have much to do with getting audio out over the air. There's the programming schedule, keeping track of what played, putting that information on the station's website, and generating reports. Radiant is an attempt to bring some of those things together.
 
+Radiant fits into the larger effort to modernize KAAD's infrastructure that I started writing about earlier this year, from [moving the internet stream to a dedicated Liquidsoap server](/posts/winamp-shoutcast-dsp-to-liquidsoap/) to [automating Icecast song metadata](/posts/icecast-metadata-systemd-service/). Those projects deal with getting audio and metadata to listeners; Radiant is more concerned with the day-to-day operation of the station.
+
 The project has a Node.js API, a React admin interface, PostgreSQL and Directus, and a WordPress plugin for displaying information on the public-facing website. The services run using Docker Compose.
 
 As I've been working on it, I've also been trying to make it something that someone at another station could pick up and run themselves. That brought up a question about how I was deploying it: why should someone cloning Radiant get a bunch of GitHub Actions workflows specific to my server?
+
+Much of the development of Radiant, including the changes described here, has been done collaboratively with ChatGPT through its GitHub integration. I've been directing the work, questioning architectural decisions, reviewing changes, and testing the results, while ChatGPT has handled much of the implementation. I've written more about that process in [Building and Maintaining a Production Application with ChatGPT and GitHub](/posts/building-radiant-with-chatgpt-and-github/).
 
 ## The original setup
 
@@ -40,7 +45,7 @@ The private repository doesn't contain a second copy of the application. It cont
 
 One of the intermediate approaches was to have the private repository periodically check the public repository for changes. That would keep the public project largely unaware of the deployment process, but it also meant running a scheduled workflow even when there was nothing new to deploy.
 
-It seemed unnecessary to have one repository continually ask another whether something had changed when GitHub already knows when a push happens.
+Polling isn't inherently a bad approach. I use it for [automating dynamic DNS at home](/posts/cloudflare-ddns-systemd-timer/), where I need to periodically discover whether my IP address has changed. But here GitHub already knows when a push happens. It seemed unnecessary to have one repository continually ask another whether something had changed.
 
 The current setup uses GitHub's [repository dispatch event](https://docs.github.com/en/rest/repos/repos#create-a-repository-dispatch-event). A small workflow in the public repository listens for pushes to `main` and sends an event to the private repository. The private repository then handles the actual deployment.
 
